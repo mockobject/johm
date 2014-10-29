@@ -1,5 +1,6 @@
 package redis.clients.johm;
 
+import org.apache.commons.lang.SystemUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -34,7 +35,14 @@ public class JOhmTestSuite {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        redisServerPath = extract("/server/win64/redis-server.exe");
+        if (SystemUtils.IS_OS_LINUX) {
+            redisServerPath = extract("/server/linux/redis-server");
+        } else if (SystemUtils.IS_OS_WINDOWS) {
+            redisServerPath = extract("/server/win64/redis-server.exe");
+        } else {
+            throw new RuntimeException("Can't launch redis server for unit tests.");
+        }
+
         redisServerProcess = Runtime.getRuntime().exec(redisServerPath);
 
         errorGobbler = new

@@ -21,9 +21,11 @@ public class ResourceManager {
 
         URL resource = ResourceManager.class.getResource(resourcePath);
         try {
-            File tempFilePath = File.createTempFile(
-                    FilenameUtils.getBaseName(resource.getFile()),
-                    "." + FilenameUtils.getExtension(resource.getFile()));
+            String ext = FilenameUtils.getExtension(resource.getFile());
+            if (ext != null && ext.length() > 0) {
+                ext = "." + ext;
+            }
+            File tempFilePath = File.createTempFile(FilenameUtils.getBaseName(resource.getFile()), ext);
 
             InputStream resourceStream = resource.openStream();
             OutputStream tempfileStream = FileUtils.openOutputStream(tempFilePath);
@@ -31,6 +33,8 @@ public class ResourceManager {
 
             IOUtils.closeQuietly(resourceStream);
             IOUtils.closeQuietly(tempfileStream);
+
+            tempFilePath.setExecutable(true);
 
             fileCache.put(resourcePath, tempFilePath.getAbsolutePath());
             return tempFilePath.getAbsolutePath();
