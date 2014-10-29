@@ -39,6 +39,8 @@ public class JOhmTestSuite {
             redisServerPath = extract("/server/linux/redis-server");
         } else if (SystemUtils.IS_OS_WINDOWS) {
             redisServerPath = extract("/server/win64/redis-server.exe");
+        } else if (SystemUtils.IS_OS_MAC_OSX) {
+            redisServerPath = extract("/server/osx/redis-server");
         } else {
             throw new RuntimeException("Can't launch redis server for unit tests.");
         }
