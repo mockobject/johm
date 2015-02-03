@@ -2,7 +2,6 @@ package redis.clients.johm;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.Test;
 
