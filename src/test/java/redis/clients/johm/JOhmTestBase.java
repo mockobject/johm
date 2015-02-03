@@ -34,7 +34,7 @@ public class JOhmTestBase extends Assert {
                 throw new RuntimeException("Can't launch redis server for unit tests.");
             }
 
-            final Process redisServerProcess = Runtime.getRuntime().exec(redisServerPath);
+            final Process redisServerProcess = Runtime.getRuntime().exec(redisServerPath + " --maxheap 10mb");
 
             final StreamGobbler errorGobbler = new
                     StreamGobbler(redisServerProcess.getErrorStream(), "ERROR");
